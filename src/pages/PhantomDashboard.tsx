@@ -1,15 +1,20 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldAlert, ShieldCheck, Activity } from 'lucide-react';
 
-const mockLogs = [
-  { id: 1, agent: 'Research Agent', action: 'API Call', target: 'api.openai.com', risk: 'Low', status: 'Allowed', time: '10:42:01.05' },
-  { id: 2, agent: 'Code Agent', action: 'File Write', target: '/src/utils.ts', risk: 'Low', status: 'Allowed', time: '10:42:02.11' },
-  { id: 3, agent: 'Analysis Agent', action: 'File Read', target: '/.env', risk: 'Critical', status: 'Blocked', time: '10:42:05.88' },
-  { id: 4, agent: 'Web Agent', action: 'Network', target: 'unknown-IP-104.22', risk: 'High', status: 'Blocked', time: '10:42:08.12' },
-  { id: 5, agent: 'Research Agent', action: 'Token Check', target: 'Global Budget', risk: 'Medium', status: 'Warn', time: '10:42:10.00' },
-];
+
 
 export default function PhantomDashboard() {
+  const [logs, setLogs] = useState([]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3001/api/logs').then(r => r.json()).then(data => {
+        if(data && !data.error) setLogs(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -70,7 +75,7 @@ export default function PhantomDashboard() {
           <div className="w-24 text-right">STATUS</div>
         </div>
         <div className="flex-1 overflow-y-auto p-2">
-          {mockLogs.map((log) => (
+          {logs.map((log) => (
             <motion.div
               key={log.id}
               initial={{ opacity: 0, x: -20 }}

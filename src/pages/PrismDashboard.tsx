@@ -1,14 +1,20 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, ArrowRightLeft, DollarSign, Zap } from 'lucide-react';
 
-const mockRoutes = [
-  { id: 1, prompt: "What is the capital of France?", classification: "simple question", confidence: 0.98, routedTo: "gpt-4o-mini", costSaved: "$0.02" },
-  { id: 2, prompt: "Write a Rust macro to...", classification: "coding and math", confidence: 0.91, routedTo: "claude-opus-4", costSaved: "$0.00" },
-  { id: 3, prompt: "Analyze this 10k financial...", classification: "complex reasoning", confidence: 0.89, routedTo: "gpt-5.5", costSaved: "$0.00" },
-  { id: 4, prompt: "Hello!", classification: "simple greeting", confidence: 0.99, routedTo: "CACHE", costSaved: "$0.001" },
-];
+
 
 export default function PrismDashboard() {
+  const [routes, setRoutes] = useState([]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3002/api/routes').then(r => r.json()).then(data => {
+        if(data && !data.error) setRoutes(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col p-6 overflow-y-auto">
       <header className="mb-6 flex justify-between items-center">
@@ -36,7 +42,7 @@ export default function PrismDashboard() {
           <div className="w-24 text-right">SAVED</div>
         </div>
         <div className="flex-1 overflow-y-auto p-2">
-          {mockRoutes.map((route) => (
+          {routes.map((route) => (
             <motion.div key={route.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center p-4 font-mono text-sm border-b border-white/5 hover:bg-white/5 transition-colors">
               <div className="flex-1 text-gray-300 truncate pr-4">"{route.prompt}"</div>
               <div className="w-48 text-neon-purple flex items-center gap-2">

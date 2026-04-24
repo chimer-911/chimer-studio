@@ -1,7 +1,18 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BrainCircuit, Search, Database } from 'lucide-react';
 
 export default function CortexDashboard() {
+  const [memories, setMemories] = useState([]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3005/api/memories').then(r => r.json()).then(data => {
+        if(data && !data.error) setMemories(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col p-6">
       <header className="mb-6 flex justify-between items-center">

@@ -1,13 +1,20 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Bug, CheckCircle2 } from 'lucide-react';
 
-const mockAstIssues = [
-  { line: 42, issue: "Use of eval() detected in AST", severity: "Critical" },
-  { line: 88, issue: "Unsafe child_process execution", severity: "High" },
-  { line: 104, issue: "Unverified AI placeholder comment", severity: "Warning" },
-];
+
 
 export default function AegisDashboard() {
+  const [issues, setIssues] = useState([]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3004/api/issues').then(r => r.json()).then(data => {
+        if(data && !data.error) setIssues(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col p-6">
       <header className="mb-6 flex justify-between items-center">
@@ -47,7 +54,7 @@ export default function AegisDashboard() {
         <div className="flex flex-col gap-4">
           <h3 className="font-mono text-gray-400 text-sm pl-2">AST VULNERABILITY REPORT</h3>
           
-          {mockAstIssues.map((issue, idx) => (
+          {issues.map((issue, idx) => (
             <motion.div 
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.1 }}
               key={idx} className="glass-panel p-4 rounded-xl border-l-4 border-l-red-500 flex flex-col gap-2"

@@ -1,12 +1,20 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Box, Terminal, Lock } from 'lucide-react';
 
-const mockContainers = [
-  { id: 'c-8f92a', image: 'python:3.11-alpine', status: 'Running', memory: '45MB / 256MB', cpu: '12%', network: 'Disabled' },
-  { id: 'c-1b4e9', image: 'node:20-alpine', status: 'Running', memory: '112MB / 256MB', cpu: '4%', network: 'Disabled' },
-];
+
 
 export default function VoidboxDashboard() {
+  const [containers, setContainers] = useState([]);
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3003/api/containers').then(r => r.json()).then(data => {
+        if(data && !data.error) setContainers(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col p-6">
       <header className="mb-6">
@@ -18,7 +26,7 @@ export default function VoidboxDashboard() {
 
       <div className="grid grid-cols-2 gap-6 h-full pb-6">
         <div className="flex flex-col gap-6">
-          {mockContainers.map((container) => (
+          {containers.map((container) => (
             <div key={container.id} className="glass-panel p-6 rounded-2xl border-white/10 relative overflow-hidden">
               <div className="absolute top-4 right-4 flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse shadow-[0_0_8px_#4ade80]" />
