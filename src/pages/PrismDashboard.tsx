@@ -28,7 +28,7 @@ export default function PrismDashboard() {
           <DollarSign className="text-neon-green" />
           <div>
             <div className="text-xs text-gray-400">Total Saved (24h)</div>
-            <div className="text-xl font-mono text-neon-green text-glow-green">$412.50</div>
+            <div className="text-xl font-mono text-neon-green text-glow-green">$0.00</div>
           </div>
         </div>
       </header>

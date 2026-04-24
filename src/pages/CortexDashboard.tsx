@@ -24,7 +24,7 @@ export default function CortexDashboard() {
         </div>
         <div className="glass-panel flex items-center gap-3 px-4 py-2 rounded-lg border-neon-green/30">
           <Database className="text-neon-green" size={18} />
-          <span className="font-mono text-white">4,092 Embeddings</span>
+          <span className="font-mono text-white">{memories?.length || 0} Embeddings</span>
         </div>
       </header>
 
@@ -48,19 +48,7 @@ export default function CortexDashboard() {
         <div className="glass-panel rounded-2xl border-white/10 p-6 overflow-y-auto">
           <h3 className="font-mono text-gray-400 mb-4 text-sm">RECENTLY ACCESSED MEMORIES</h3>
           <div className="space-y-4">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/5 hover:border-neon-green/30 transition-colors cursor-pointer">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-xs font-mono text-neon-green bg-neon-green/10 px-2 py-1 rounded">Distance: 0.9{9-i}</span>
-                  <span className="text-xs text-gray-500">{i}h ago</span>
-                </div>
-                <p className="text-sm text-gray-300 font-mono">
-                  {i === 1 ? "The user prefers strictly typed TypeScript configurations with noImplicitAny enabled." : 
-                   i === 2 ? "Database connection strings must always use environment variables." :
-                   "Last known working configuration for the orchestration engine was v0.1.4."}
-                </p>
-              </div>
-            ))}
+            
           </div>
         </div>
       </div>

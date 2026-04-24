@@ -26,7 +26,7 @@ export default function AegisDashboard() {
         </div>
         <div className="glass-panel px-4 py-2 rounded-lg border-yellow-400/30 flex flex-col items-end">
           <span className="text-xs text-gray-400">Trust Score</span>
-          <span className="text-2xl font-mono text-yellow-400 font-bold">64/100</span>
+          <span className="text-2xl font-mono text-yellow-400 font-bold">{issues?.length > 0 ? 0 : 100}/100</span>
         </div>
       </header>
 
@@ -38,15 +38,7 @@ export default function AegisDashboard() {
           <div className="flex-1 bg-[#1e1e1e] p-4 font-mono text-sm text-gray-300 overflow-y-auto relative">
             <div className="absolute top-10 left-0 w-full h-6 bg-red-500/20 border-l-2 border-red-500 pointer-events-none" />
             <pre>
-{`function executeQuery(payload: string) {
-  // Validate input
-  if (!payload) return;
-
-  // Execute
-  const result = eval(payload);
-  
-  return result;
-}`}
+{""}
             </pre>
           </div>
         </div>

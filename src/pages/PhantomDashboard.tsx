@@ -38,7 +38,7 @@ export default function PhantomDashboard() {
           </div>
           <div>
             <div className="text-sm text-gray-400">Total Intercepts</div>
-            <div className="text-3xl font-mono text-white text-glow-green">14,092</div>
+            <div className="text-3xl font-mono text-white text-glow-green">{logs?.length || 0}</div>
           </div>
         </div>
 
@@ -49,7 +49,7 @@ export default function PhantomDashboard() {
           </div>
           <div>
             <div className="text-sm text-gray-400">Threats Blocked</div>
-            <div className="text-3xl font-mono text-white text-glow">342</div>
+            <div className="text-3xl font-mono text-white text-glow">{logs?.filter(l => l.blocked)?.length || 0}</div>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function PhantomDashboard() {
           </div>
           <div>
             <div className="text-sm text-gray-400">Active Rules</div>
-            <div className="text-3xl font-mono text-white">128</div>
+            <div className="text-3xl font-mono text-white">{0}</div>
           </div>
         </div>
       </div>
