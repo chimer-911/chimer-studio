@@ -5,7 +5,7 @@ import { Code2, Bug, CheckCircle2 } from 'lucide-react';
 
 
 export default function AegisDashboard() {
-  const [issues, setIssues] = useState([]);
+  const [issues, setIssues] = useState<any[]>([]);
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetch('http://localhost:3004/api/issues').then(r => r.json()).then(data => {

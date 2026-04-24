@@ -1,13 +1,23 @@
 import { motion } from 'framer-motion';
 import ReactFlow, { Background, Controls } from 'reactflow';
 import type { Edge, Node } from 'reactflow';
-import 'reactflow/dist/style.css';
 
 
 
 
 
+
+import { useState, useEffect } from 'react';
 export default function NexusDashboard() {
+  const [swarm, setSwarm] = useState<any>({ nodes: [], edges: [] });
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      fetch('http://localhost:3000/api/swarm').then(r => r.json()).then(data => {
+        if(data && !data.error) setSwarm(data);
+      }).catch(() => {});
+    }, 1000);
+    return () => clearInterval(fetchInterval);
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0 }}

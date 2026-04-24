@@ -5,7 +5,7 @@ import { ShieldAlert, ShieldCheck, Activity } from 'lucide-react';
 
 
 export default function PhantomDashboard() {
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState<any[]>([]);
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetch('http://localhost:3001/api/logs').then(r => r.json()).then(data => {

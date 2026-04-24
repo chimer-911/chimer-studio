@@ -5,7 +5,7 @@ import { Cpu, ArrowRightLeft, DollarSign, Zap } from 'lucide-react';
 
 
 export default function PrismDashboard() {
-  const [routes, setRoutes] = useState([]);
+  const [routes, setRoutes] = useState<any[]>([]);
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetch('http://localhost:3002/api/routes').then(r => r.json()).then(data => {

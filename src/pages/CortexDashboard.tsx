@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { BrainCircuit, Search, Database } from 'lucide-react';
 
 export default function CortexDashboard() {
-  const [memories, setMemories] = useState([]);
+  const [memories, setMemories] = useState<any[]>([]);
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetch('http://localhost:3005/api/memories').then(r => r.json()).then(data => {

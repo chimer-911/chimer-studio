@@ -5,7 +5,7 @@ import { Box, Terminal, Lock } from 'lucide-react';
 
 
 export default function VoidboxDashboard() {
-  const [containers, setContainers] = useState([]);
+  const [containers, setContainers] = useState<any[]>([]);
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       fetch('http://localhost:3003/api/containers').then(r => r.json()).then(data => {
