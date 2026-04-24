@@ -37,16 +37,16 @@ export default function NexusDashboard() {
             <span className="text-xs text-gray-400">Total Tokens</span>
             <span className="text-xl font-mono text-neon-purple text-glow-purple">{0}</span>
           </div>
+          <div className="flex items-center ml-2">
+            <span className="px-3 py-1.5 text-xs font-semibold tracking-wider uppercase bg-[#1a1a1a] text-emerald-400 border border-emerald-500/20 rounded-lg flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              Execution Live
+            </span>
+          </div>
         </div>
       </header>
 
-      <div className="flex-1 glass-panel rounded-2xl overflow-hidden relative border-white/10 shadow-[0_0_30px_rgba(96,165,250,0.1)]">
-        <div className="absolute top-4 left-4 z-10 flex gap-2">
-          <span className="px-3 py-1 text-xs font-mono bg-neon-green/10 text-neon-green border border-neon-green/30 rounded-full flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse" />
-            Execution Live
-          </span>
-        </div>
+      <div className="flex-1 glass-panel rounded-2xl overflow-hidden relative border-white/[0.05] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
         <ReactFlow
           nodes={swarm?.nodes || []}
           edges={swarm?.edges || []}
