@@ -21,26 +21,25 @@ export default function App() {
   ];
 
   return (
-    <div className="flex h-screen w-full bg-background overflow-hidden relative">
-      {/* Background ambient glow */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-neon-blue/5 blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-neon-purple/5 blur-[150px] pointer-events-none" />
-
-      {/* Sidebar */}
-      <div className="w-64 glass-panel border-r border-t-0 border-b-0 border-l-0 z-10 flex flex-col">
-        <div className="p-6">
+    <div className="flex h-screen w-full bg-transparent overflow-hidden">
+      {/* Sidebar - Linear Style */}
+      <div className="w-[260px] bg-[#0c0c0c] border-r border-white/[0.04] z-10 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.4)]">
+        <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
-              <Network size={20} className="text-white" />
+            <div className="w-6 h-6 rounded-md bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] border border-white/[0.08] flex items-center justify-center shadow-inner">
+              <Network size={14} className="text-[#a0a0a0]" />
             </div>
-            <h1 className="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-              CHIMER<span className="text-neon-blue">.OS</span>
+            <h1 className="text-sm font-semibold tracking-tight text-white">
+              Chimer<span className="text-gray-500 font-normal">.OS</span>
             </h1>
           </div>
-          <p className="text-xs text-gray-500 mt-2 tracking-widest uppercase">Command Center 2026</p>
         </div>
 
-        <div className="flex-1 px-4 space-y-2 mt-4">
+        <div className="px-3 mb-2">
+          <p className="text-[10px] font-semibold text-gray-600 tracking-wider uppercase pl-3 mb-2">Infrastructure</p>
+        </div>
+
+        <div className="flex-1 px-3 space-y-[2px]">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -48,38 +47,30 @@ export default function App() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 relative group ${
-                  isActive ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 relative group ${
+                  isActive ? 'bg-[#1e1e1e] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]' : 'text-gray-400 hover:bg-[#161616] hover:text-gray-200'
                 }`}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-white/10 rounded-xl border border-white/20"
-                    initial={false}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <Icon size={18} className={`relative z-10 ${isActive ? tab.color : 'group-hover:text-white transition-colors'}`} />
-                <span className="relative z-10 font-medium text-sm">{tab.name}</span>
+                <Icon size={15} strokeWidth={isActive ? 2.5 : 2} className={`relative z-10 ${isActive ? tab.color : 'text-gray-500 group-hover:text-gray-400 transition-colors'}`} />
+                <span className="relative z-10 font-medium text-[13px] tracking-tight">{tab.name}</span>
               </button>
             );
           })}
         </div>
 
-        <div className="p-6">
-          <div className="glass-panel p-4 rounded-xl flex items-center gap-3 border-neon-green/30">
-            <div className="w-2 h-2 rounded-full bg-neon-green animate-pulse shadow-[0_0_10px_#4ade80]" />
-            <div className="text-xs">
-              <div className="text-gray-400">System Status</div>
-              <div className="text-neon-green font-mono">All Systems Nominal</div>
+        <div className="p-4 border-t border-white/[0.04] bg-[#0a0a0a]">
+          <div className="flex items-center justify-between px-2">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-neon-green shadow-[0_0_8px_rgba(58,176,127,0.8)]" />
+              <span className="text-[11px] font-medium text-gray-400">All Systems Nominal</span>
             </div>
+            <span className="text-[10px] text-gray-600 font-mono">v1.0</span>
           </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 relative z-10 overflow-hidden">
+      <div className="flex-1 relative z-10 overflow-hidden bg-transparent">
         <AnimatePresence mode="wait">
           {activeTab === 'nexus' && <NexusDashboard key="nexus" />}
           {activeTab === 'phantom' && <PhantomDashboard key="phantom" />}
