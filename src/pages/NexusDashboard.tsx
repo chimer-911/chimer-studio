@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
 import ReactFlow, { Background, Controls } from 'reactflow';
-import type { Edge, Node } from 'reactflow';
-
 
 
 

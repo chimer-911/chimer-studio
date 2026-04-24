@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Network, ShieldAlert, Cpu, Box, BrainCircuit, Code2 } from 'lucide-react';
 import NexusDashboard from './pages/NexusDashboard';
 import PhantomDashboard from './pages/PhantomDashboard';
