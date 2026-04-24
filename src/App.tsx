@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { Network, ShieldAlert, Cpu, Box, BrainCircuit, Code2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Network, ShieldAlert, Cpu, Box, BrainCircuit, Code2, Zap } from 'lucide-react';
 import NexusDashboard from './pages/NexusDashboard';
 import PhantomDashboard from './pages/PhantomDashboard';
 import PrismDashboard from './pages/PrismDashboard';
@@ -12,34 +12,35 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('nexus');
 
   const tabs = [
-    { id: 'nexus', name: 'NEXUS Orchestrator', icon: Network, color: 'text-neon-blue' },
-    { id: 'phantom', name: 'PHANTOM Firewall', icon: ShieldAlert, color: 'text-neon-red' },
-    { id: 'prism', name: 'PRISM Gateway', icon: Cpu, color: 'text-neon-purple' },
-    { id: 'voidbox', name: 'VOIDBOX Sandbox', icon: Box, color: 'text-gray-400' },
-    { id: 'cortex', name: 'CORTEX Memory', icon: BrainCircuit, color: 'text-neon-green' },
-    { id: 'aegis', name: 'AEGIS Verifier', icon: Code2, color: 'text-yellow-400' },
+    { id: 'nexus', name: 'NEXUS Orchestrator', icon: Network },
+    { id: 'phantom', name: 'PHANTOM Firewall', icon: ShieldAlert },
+    { id: 'prism', name: 'PRISM Gateway', icon: Cpu },
+    { id: 'voidbox', name: 'VOIDBOX Sandbox', icon: Box },
+    { id: 'cortex', name: 'CORTEX Memory', icon: BrainCircuit },
+    { id: 'aegis', name: 'AEGIS Verifier', icon: Code2 },
   ];
 
   return (
-    <div className="flex h-screen w-full bg-transparent overflow-hidden">
-      {/* Sidebar - Linear Style */}
-      <div className="w-[260px] bg-[#0c0c0c] border-r border-white/[0.04] z-10 flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.4)]">
-        <div className="p-6 pb-4">
+    <div className="flex h-screen w-full bg-[#030303] text-gray-200 font-sans overflow-hidden selection:bg-white/10">
+      
+      {/* Ultra Sleek Sidebar */}
+      <div className="w-[280px] bg-[#080808] border-r border-white/[0.03] flex flex-col relative z-20">
+        
+        {/* Logo Area */}
+        <div className="h-20 flex items-center px-6 border-b border-white/[0.02]">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-md bg-gradient-to-b from-[#2a2a2a] to-[#1a1a1a] border border-white/[0.08] flex items-center justify-center shadow-inner">
-              <Network size={14} className="text-[#a0a0a0]" />
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] border border-white/[0.05] shadow-[0_2px_10px_rgba(0,0,0,1)] flex items-center justify-center">
+              <Zap size={14} className="text-white" />
             </div>
-            <h1 className="text-sm font-semibold tracking-tight text-white">
-              Chimer<span className="text-gray-500 font-normal">.OS</span>
+            <h1 className="text-[15px] font-semibold tracking-tight text-white/90">
+              Chimer<span className="text-white/30 font-medium">.OS</span>
             </h1>
           </div>
         </div>
 
-        <div className="px-3 mb-2">
-          <p className="text-[10px] font-semibold text-gray-600 tracking-wider uppercase pl-3 mb-2">Infrastructure</p>
-        </div>
-
-        <div className="flex-1 px-3 space-y-[2px]">
+        {/* Navigation */}
+        <div className="flex-1 px-4 py-6 space-y-[2px]">
+          <p className="text-[10px] font-medium text-white/20 tracking-[0.2em] uppercase px-3 mb-5">Core Infrastructure</p>
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -47,38 +48,70 @@ export default function App() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 relative group ${
-                  isActive ? 'bg-[#1e1e1e] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]' : 'text-gray-400 hover:bg-[#161616] hover:text-gray-200'
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 relative group ${
+                  isActive ? 'text-white' : 'text-white/40 hover:text-white/90'
                 }`}
               >
-                <Icon size={15} strokeWidth={isActive ? 2.5 : 2} className={`relative z-10 ${isActive ? tab.color : 'text-gray-500 group-hover:text-gray-400 transition-colors'}`} />
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabBg"
+                    className="absolute inset-0 bg-white/[0.04] rounded-lg border border-white/[0.05] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+                    initial={false}
+                    transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                  />
+                )}
+                <Icon size={16} strokeWidth={isActive ? 2.5 : 2} className="relative z-10" />
                 <span className="relative z-10 font-medium text-[13px] tracking-tight">{tab.name}</span>
+                {isActive && (
+                  <motion.div 
+                    layoutId="activeIndicator"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-white rounded-r-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" 
+                  />
+                )}
               </button>
             );
           })}
         </div>
 
-        <div className="p-4 border-t border-white/[0.04] bg-[#0a0a0a]">
-          <div className="flex items-center justify-between px-2">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-neon-green shadow-[0_0_8px_rgba(58,176,127,0.8)]" />
-              <span className="text-[11px] font-medium text-gray-400">All Systems Nominal</span>
+        {/* Footer Status */}
+        <div className="p-5 border-t border-white/[0.02] bg-[#050505]">
+          <div className="flex items-center gap-3 px-1">
+            <div className="relative flex items-center justify-center w-2.5 h-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-20 animate-ping"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white shadow-[0_0_8px_rgba(255,255,255,1)]"></span>
             </div>
-            <span className="text-[10px] text-gray-600 font-mono">v1.0</span>
+            <div className="flex flex-col">
+              <span className="text-[11px] font-semibold text-white/80 tracking-wide">System Online</span>
+              <span className="text-[10px] text-white/30 font-mono mt-0.5">Latency: 12ms</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 relative z-10 overflow-hidden bg-transparent">
-        <AnimatePresence mode="wait">
-          {activeTab === 'nexus' && <NexusDashboard key="nexus" />}
-          {activeTab === 'phantom' && <PhantomDashboard key="phantom" />}
-          {activeTab === 'prism' && <PrismDashboard key="prism" />}
-          {activeTab === 'voidbox' && <VoidboxDashboard key="voidbox" />}
-          {activeTab === 'cortex' && <CortexDashboard key="cortex" />}
-          {activeTab === 'aegis' && <AegisDashboard key="aegis" />}
-        </AnimatePresence>
+      {/* Main Content Area - FIXED OVERLAPPING HERE */}
+      <div className="flex-1 relative z-10 overflow-y-auto bg-transparent">
+        {/* 2026 Ambient Top Glow */}
+        <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-white/[0.015] rounded-[100%] blur-[100px] pointer-events-none" />
+        
+        <div className="min-h-full p-8 lg:p-12 pb-24">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -15, filter: 'blur(8px)' }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full max-w-[1400px] mx-auto"
+            >
+              {activeTab === 'nexus' && <NexusDashboard />}
+              {activeTab === 'phantom' && <PhantomDashboard />}
+              {activeTab === 'prism' && <PrismDashboard />}
+              {activeTab === 'voidbox' && <VoidboxDashboard />}
+              {activeTab === 'cortex' && <CortexDashboard />}
+              {activeTab === 'aegis' && <AegisDashboard />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
